@@ -1,0 +1,34 @@
+
+server:
+  port: 8800
+
+spring:
+  application:
+    name: operations-history
+  liquibase:
+    change-log: classpath:db/master-changelog.yaml
+    drop-first: false
+
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: ${POSTGRES_DRIVER-CLASS-NAME}
+    hikari:
+      maximum-pool-size: ${POSTGRES_MAX-POOL-SIZE}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+POSTGRES_URL: "jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DBNAME}?currentSchema=${POSTGRES_SCHEMA}&reWriteBatchedInserts=true&targetServerType=primary"
+POSTGRES_DRIVER-CLASS-NAME: org.postgresql.Driver
+POSTGRES_MAX-POOL-SIZE: '3'
+POSTGRES_DBNAME: operations-history-db
+POSTGRES_SCHEMA: test
+POSTGRES_HOST: localhost:5432
+POSTGRES_USER: operations-history
+POSTGRES_PASSWORD: operations-history
